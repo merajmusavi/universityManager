@@ -13,7 +13,7 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Course {
+public class Course extends BaseEntity{
 
     @Column(unique = true,nullable = false)
     private int code;
