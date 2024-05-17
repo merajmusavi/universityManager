@@ -9,8 +9,6 @@ import lombok.Setter;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
-@Setter
 @NoArgsConstructor
 @Entity
 public class Professor extends User {
@@ -23,4 +21,28 @@ public class Professor extends User {
 
     @OneToMany(mappedBy = "professor", cascade = CascadeType.ALL)
     private Set<Course> courses = new HashSet<>();
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public AcademicRank getAcademicRank() {
+        return academicRank;
+    }
+
+    public void setAcademicRank(AcademicRank academicRank) {
+        this.academicRank = academicRank;
+    }
+
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
+    }
 }

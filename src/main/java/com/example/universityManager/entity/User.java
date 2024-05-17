@@ -9,8 +9,6 @@ import lombok.Setter;
 import java.util.Date;
 
 @MappedSuperclass
-@Setter
-@Getter
 @NoArgsConstructor
 public class User extends BaseEntity {
     @Column(nullable = false)
@@ -34,4 +32,60 @@ public class User extends BaseEntity {
 
     @Column(nullable = false)
     private String password;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getFamily() {
+        return family;
+    }
+
+    public void setFamily(String family) {
+        this.family = family;
+    }
+
+    public long getNationalCode() {
+        return nationalCode;
+    }
+
+    public void setNationalCode(long nationalCode) {
+        this.nationalCode = nationalCode;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

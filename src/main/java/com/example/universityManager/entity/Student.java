@@ -10,8 +10,7 @@ import lombok.Setter;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
-@Setter
+
 @NoArgsConstructor
 @Entity
 public class Student extends User {
@@ -23,4 +22,28 @@ public class Student extends User {
 
     @ManyToMany(mappedBy = "students")
     private Set<Course> courses = new HashSet<>();
+
+    public Long getStdNumber() {
+        return stdNumber;
+    }
+
+    public void setStdNumber(Long stdNumber) {
+        this.stdNumber = stdNumber;
+    }
+
+    public AcademicLevel getAcademicRank() {
+        return academicRank;
+    }
+
+    public void setAcademicRank(AcademicLevel academicRank) {
+        this.academicRank = academicRank;
+    }
+
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
+    }
 }
