@@ -18,7 +18,7 @@ Follow these steps to set up the project on your local machine for development a
 ### Prerequisites
 
 - Java Development Kit (JDK) version 8 or higher
-- Apache Maven
+- Gradle
 - postgreSql or another relational database management system
 
 ### Installation
