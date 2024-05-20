@@ -9,11 +9,9 @@ import lombok.Setter;
 import java.util.HashSet;
 import java.util.Set;
 
-@Setter
-@Getter
-@NoArgsConstructor
+
 @Entity
-public class Course extends BaseEntity{
+public class Course extends BaseEntity {
     public int getCode() {
         return code;
     }
@@ -28,6 +26,9 @@ public class Course extends BaseEntity{
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Course() {
     }
 
     public int getUnits() {
@@ -54,7 +55,7 @@ public class Course extends BaseEntity{
         this.students = students;
     }
 
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     private int code;
 
     @Column(nullable = false)
@@ -64,7 +65,7 @@ public class Course extends BaseEntity{
     private int units;
 
     @ManyToOne
-    @JoinColumn(name = "professor_id")
+    @JoinColumn(name = "professor_id", nullable = false)
     private Professor professor;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -73,7 +74,7 @@ public class Course extends BaseEntity{
             joinColumns = {@JoinColumn(name = "course_id")},
             inverseJoinColumns = {@JoinColumn(name = "student_id")}
     )
-    private Set<Student> students  = new HashSet<>();
+    private Set<Student> students = new HashSet<>();
 
 }
 

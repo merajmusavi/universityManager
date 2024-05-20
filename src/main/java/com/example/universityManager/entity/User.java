@@ -11,6 +11,10 @@ import java.util.Date;
 @MappedSuperclass
 @NoArgsConstructor
 public class User extends BaseEntity {
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    private Long id;
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)

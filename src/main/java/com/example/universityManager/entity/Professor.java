@@ -9,7 +9,6 @@ import lombok.Setter;
 import java.util.HashSet;
 import java.util.Set;
 
-@NoArgsConstructor
 @Entity
 public class Professor extends User {
     @Column(unique = true, nullable = false, updatable = false)
