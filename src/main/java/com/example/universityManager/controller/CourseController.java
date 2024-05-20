@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Optional;
 
 @RestController
@@ -40,9 +41,9 @@ public class CourseController {
         Course course = new Course();
 
         Boolean isExists = courseService.isCourseWithThisCodeExists(Long.valueOf(courseDto.getCode()));
-        if (isExists){
+        if (isExists) {
             ErrorEntity status = new ErrorEntity();
-            status.setStatus("there is a course with "+ courseDto.getCode() + " already");
+            status.setStatus("there is a course with " + courseDto.getCode() + " already");
             return ResponseEntity.ok(status);
         }
 
@@ -56,5 +57,20 @@ public class CourseController {
 
 
         return ResponseEntity.ok(courseDto);
+    }
+
+    @GetMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        boolean deletedStatus = courseService.deleteById(id);
+        if (deletedStatus) {
+            HashMap<String, Long> deletedCourse = new HashMap<>();
+            deletedCourse.put("id", id);
+            return ResponseEntity.ok(deletedCourse);
+        } else {
+            ErrorEntity errorEntity = new ErrorEntity();
+            errorEntity.setStatus("not deleted");
+            return ResponseEntity.ok(errorEntity);
+        }
     }
 }

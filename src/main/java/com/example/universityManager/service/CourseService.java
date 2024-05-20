@@ -19,6 +19,17 @@ public class CourseService {
     }
 
 
+    public boolean deleteById(Long id) {
+        Boolean courseWithThisIdExists = isCourseWithThisIdExists(id);
+        if (courseWithThisIdExists) {
+            courseRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     public void save(Course course) {
         Optional<Course> foundedCourse = courseRepository.findByCode(Long.valueOf(course.getCode()));
         if (foundedCourse.isPresent()) {
@@ -39,6 +50,16 @@ public class CourseService {
 
     public Boolean isCourseWithThisCodeExists(Long code) {
         Optional<Course> foundedCourse = courseRepository.findByCode(code);
+        if (foundedCourse.isPresent()) {
+            return true;
+        } else {
+            return false;
+
+        }
+    }
+
+    public Boolean isCourseWithThisIdExists(Long id) {
+        Optional<Course> foundedCourse = courseRepository.findById(id);
         if (foundedCourse.isPresent()) {
             return true;
         } else {
