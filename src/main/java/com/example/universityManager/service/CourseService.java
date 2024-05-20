@@ -4,7 +4,6 @@ import com.example.universityManager.entity.Course;
 import com.example.universityManager.exception.ConflictException;
 import com.example.universityManager.exception.NotFoundException;
 import com.example.universityManager.repository.CourseRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +20,7 @@ public class CourseService {
 
 
     public void save(Course course) {
-        Optional<Course> foundedCourse = courseRepository.findByCode(course.getCode());
+        Optional<Course> foundedCourse = courseRepository.findByCode(Long.valueOf(course.getCode()));
         if (foundedCourse.isPresent()) {
             throw new ConflictException("already there is a book with this id ");
         } else {
@@ -35,6 +34,16 @@ public class CourseService {
             return foundedCourse.get();
         } else {
             throw new NotFoundException("course with " + id + "already exists found");
+        }
+    }
+
+    public Boolean isCourseWithThisCodeExists(Long code) {
+        Optional<Course> foundedCourse = courseRepository.findByCode(code);
+        if (foundedCourse.isPresent()) {
+            return true;
+        } else {
+            return false;
+
         }
     }
 
