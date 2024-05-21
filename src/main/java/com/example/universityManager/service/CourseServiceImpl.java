@@ -34,7 +34,7 @@ public class CourseServiceImpl implements CourseService {
     public void save(Course course) {
         Optional<Course> foundedCourse = courseRepository.findByCode(Long.valueOf(course.getCode()));
         if (foundedCourse.isPresent()) {
-            throw new ConflictException("already there is a book with this id ");
+            throw new ConflictException("already there is a course with this code ");
         } else {
             courseRepository.save(course);
         }
@@ -46,7 +46,7 @@ public class CourseServiceImpl implements CourseService {
         if (foundedCourse.isPresent()) {
             return foundedCourse.get();
         } else {
-            throw new NotFoundException("course with " + id + "already exists found");
+            throw new NotFoundException("course with " + id + "not found");
         }
     }
 
@@ -79,8 +79,8 @@ public class CourseServiceImpl implements CourseService {
             courseRepository.save(course);
             return foundedCourse.get();
         } else {
-            throw new NotFoundException("course with " + course.getId() + "already exists found");
 
+            throw new NotFoundException("course with " + course.getId() + "not found");
         }
     }
 
