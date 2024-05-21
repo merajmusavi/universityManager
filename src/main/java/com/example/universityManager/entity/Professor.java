@@ -2,9 +2,6 @@ package com.example.universityManager.entity;
 
 import com.example.universityManager.enums.AcademicRank;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
