@@ -1,5 +1,6 @@
 package com.example.universityManager.service;
 
+import com.example.universityManager.dto.course.UpdateCourseDto;
 import com.example.universityManager.entity.Course;
 
 public interface CourseService {
@@ -8,5 +9,5 @@ public interface CourseService {
     public Course findById(Long id);
     public Boolean isCourseWithThisCodeExists(Long code);
     public Boolean isCourseWithThisIdExists(Long id);
-    public Course update(Course course);
+    public Course update(UpdateCourseDto course);
 }

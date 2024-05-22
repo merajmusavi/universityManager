@@ -1,6 +1,6 @@
 package com.example.universityManager.controller;
 
-import com.example.universityManager.dto.CourseDto;
+import com.example.universityManager.dto.course.AddCourseDto;
 import com.example.universityManager.dto.ErrorEntity;
 import com.example.universityManager.entity.Course;
 import com.example.universityManager.entity.Professor;
@@ -29,7 +29,7 @@ public class CourseController {
 
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> save(@RequestBody CourseDto courseDto) {
+    public ResponseEntity<?> save(@RequestBody AddCourseDto courseDto) {
         Optional<Professor> foundedProfessor = professorRepository.findById(courseDto.getProfessorId());
 
         if (!foundedProfessor.isPresent()) {

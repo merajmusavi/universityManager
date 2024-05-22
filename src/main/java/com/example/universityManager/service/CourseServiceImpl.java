@@ -1,8 +1,10 @@
 package com.example.universityManager.service;
 
+import com.example.universityManager.dto.course.UpdateCourseDto;
 import com.example.universityManager.entity.Course;
 import com.example.universityManager.exception.ConflictException;
 import com.example.universityManager.exception.NotFoundException;
+import com.example.universityManager.mapper.CourseMapper;
 import com.example.universityManager.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,14 +75,16 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course update(Course course) {
-        Optional<Course> foundedCourse = courseRepository.findById(course.getId());
+    public Course update(UpdateCourseDto courseDto) {
+        Optional<Course> foundedCourse = courseRepository.findById(courseDto.getId());
         if (foundedCourse.isPresent()) {
-            courseRepository.save(course);
+            Course course1 = foundedCourse.get();
+            CourseMapper.updateEntityFromDto(courseDto, course1);
+            courseRepository.save(course1);
             return foundedCourse.get();
         } else {
 
-            throw new NotFoundException("course with " + course.getId() + "not found");
+            throw new NotFoundException("course with " + courseDto.getId() + "not found");
         }
     }
 

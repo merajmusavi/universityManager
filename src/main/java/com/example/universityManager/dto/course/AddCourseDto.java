@@ -1,6 +1,6 @@
-package com.example.universityManager.dto;
+package com.example.universityManager.dto.course;
 
-public class CourseDto {
+public class AddCourseDto {
     private int code;
     private String title;
     private int units;
