@@ -38,23 +38,7 @@ public class CourseController {
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> save(@RequestBody AddCourseDto courseDto) {
-        Optional<Professor> foundedProfessor = professorRepository.findById(courseDto.getProfessorId());
-
-        if (!foundedProfessor.isPresent()) {
-            ErrorEntity status = new ErrorEntity();
-            status.setStatus("there is no professor with this id");
-            return ResponseEntity.ok(status);
-        }
-        Boolean isExists = courseService.isCourseWithThisCodeExists(Long.valueOf(courseDto.getCode()));
-        if (isExists) {
-            ErrorEntity status = new ErrorEntity();
-            status.setStatus("there is a course with " + courseDto.getCode() + " already");
-            return ResponseEntity.ok(status);
-        }
-
         courseService.save(courseDto);
-
-
         return ResponseEntity.ok(courseDto);
     }
 
