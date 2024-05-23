@@ -1,10 +1,18 @@
 package com.example.universityManager.dto.course;
 
-public class UpdateCourseDto
-{
+import com.example.universityManager.service.ProfessorService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
+
+public class UpdateCourseDto {
+
+
     private Long id;
     private String title;
     private Long professorId;
+
+
 
     public Long getId() {
         return id;

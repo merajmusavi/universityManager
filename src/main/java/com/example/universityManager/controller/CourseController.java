@@ -2,6 +2,7 @@ package com.example.universityManager.controller;
 
 import com.example.universityManager.dto.course.AddCourseDto;
 import com.example.universityManager.dto.ErrorEntity;
+import com.example.universityManager.dto.course.UpdateCourseDto;
 import com.example.universityManager.entity.Course;
 import com.example.universityManager.entity.Professor;
 import com.example.universityManager.repository.ProfessorRepository;
@@ -25,6 +26,13 @@ public class CourseController {
     public CourseController(CourseService courseService, ProfessorRepository professorRepository) {
         this.courseService = courseService;
         this.professorRepository = professorRepository;
+    }
+
+    @PostMapping("/update")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public ResponseEntity<?> update(@RequestBody UpdateCourseDto courseDto) {
+        Course updated = courseService.update(courseDto);
+        return ResponseEntity.ok(updated);
     }
 
     @PostMapping("/save")
