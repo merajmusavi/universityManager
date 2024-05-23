@@ -46,14 +46,9 @@ public class CourseController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<?> delete(@PathVariable Long id) {
         boolean deletedStatus = courseService.deleteById(id);
-        if (deletedStatus) {
-            HashMap<String, Long> deletedCourse = new HashMap<>();
-            deletedCourse.put("id", id);
-            return ResponseEntity.ok(deletedCourse);
-        } else {
-            ErrorEntity errorEntity = new ErrorEntity();
-            errorEntity.setStatus("not deleted");
-            return ResponseEntity.ok(errorEntity);
-        }
+        HashMap<String, Long> deletedCourse = new HashMap<>();
+        deletedCourse.put("id", id);
+        return ResponseEntity.ok(deletedCourse);
+
     }
 }

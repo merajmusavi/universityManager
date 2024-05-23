@@ -32,7 +32,7 @@ public class CourseServiceImpl implements CourseService {
             courseRepository.deleteById(id);
             return true;
         } else {
-            return false;
+            throw new NotFoundException("there is no course with this id: "+ id);
         }
     }
 
