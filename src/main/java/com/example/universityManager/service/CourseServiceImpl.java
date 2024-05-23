@@ -1,7 +1,9 @@
 package com.example.universityManager.service;
 
+import com.example.universityManager.dto.course.AddCourseDto;
 import com.example.universityManager.dto.course.UpdateCourseDto;
 import com.example.universityManager.entity.Course;
+import com.example.universityManager.entity.Professor;
 import com.example.universityManager.exception.ConflictException;
 import com.example.universityManager.exception.NotFoundException;
 import com.example.universityManager.mapper.CourseMapper;
@@ -14,10 +16,12 @@ import java.util.Optional;
 @Service
 public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
+    private final ProfessorService professorService;
 
     @Autowired
-    public CourseServiceImpl(CourseRepository courseRepository) {
+    public CourseServiceImpl(CourseRepository courseRepository, ProfessorService professorService) {
         this.courseRepository = courseRepository;
+        this.professorService = professorService;
     }
 
     @Override
@@ -33,11 +37,17 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void save(Course course) {
-        Optional<Course> foundedCourse = courseRepository.findByCode(Long.valueOf(course.getCode()));
+    public void save(AddCourseDto courseDto) {
+        Optional<Course> foundedCourse = courseRepository.findByCode(Long.valueOf(courseDto.getCode()));
+        Professor foundedProfessor = professorService.findById(courseDto.getProfessorId());
+
         if (foundedCourse.isPresent()) {
             throw new ConflictException("already there is a course with this code ");
+        } else if (foundedProfessor == null) {
+            throw new ConflictException("there is no professor with this id :  " + courseDto.getProfessorId() );
         } else {
+            Course course = new Course();
+            CourseMapper.saveEntityFromDto(courseDto, course);
             courseRepository.save(course);
         }
     }

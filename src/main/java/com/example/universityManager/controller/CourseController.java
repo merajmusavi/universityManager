@@ -45,9 +45,6 @@ public class CourseController {
             status.setStatus("there is no professor with this id");
             return ResponseEntity.ok(status);
         }
-
-        Course course = new Course();
-
         Boolean isExists = courseService.isCourseWithThisCodeExists(Long.valueOf(courseDto.getCode()));
         if (isExists) {
             ErrorEntity status = new ErrorEntity();
@@ -55,13 +52,7 @@ public class CourseController {
             return ResponseEntity.ok(status);
         }
 
-
-        course.setCode(courseDto.getCode());
-
-        course.setProfessor(foundedProfessor.get());
-        course.setTitle(courseDto.getTitle());
-        course.setUnits(courseDto.getUnits());
-        courseService.save(course);
+        courseService.save(courseDto);
 
 
         return ResponseEntity.ok(courseDto);
