@@ -1,10 +1,9 @@
 package com.example.universityManager.controller;
 
 import com.example.universityManager.dto.course.AddCourseDto;
-import com.example.universityManager.dto.ErrorEntity;
+import com.example.universityManager.dto.course.ShowCourseDto;
 import com.example.universityManager.dto.course.UpdateCourseDto;
 import com.example.universityManager.entity.Course;
-import com.example.universityManager.entity.Professor;
 import com.example.universityManager.repository.ProfessorRepository;
 import com.example.universityManager.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/course/v1")
@@ -50,5 +48,11 @@ public class CourseController {
         deletedCourse.put("id", id);
         return ResponseEntity.ok(deletedCourse);
 
+    }
+
+    @GetMapping("/getCourseByCode/{code}")
+    @ResponseStatus(HttpStatus.OK)
+    public ShowCourseDto showCourse(@PathVariable Long code){
+        return courseService.showCourseByCode(code);
     }
 }

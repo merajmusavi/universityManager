@@ -1,6 +1,7 @@
 package com.example.universityManager.service;
 
 import com.example.universityManager.dto.course.AddCourseDto;
+import com.example.universityManager.dto.course.ShowCourseDto;
 import com.example.universityManager.dto.course.UpdateCourseDto;
 import com.example.universityManager.entity.Course;
 import com.example.universityManager.entity.Professor;
@@ -32,7 +33,7 @@ public class CourseServiceImpl implements CourseService {
             courseRepository.deleteById(id);
             return true;
         } else {
-            throw new NotFoundException("there is no course with this id: "+ id);
+            throw new NotFoundException("there is no course with this id: " + id);
         }
     }
 
@@ -44,7 +45,7 @@ public class CourseServiceImpl implements CourseService {
         if (foundedCourse.isPresent()) {
             throw new ConflictException("already there is a course with this code ");
         } else if (foundedProfessor == null) {
-            throw new ConflictException("there is no professor with this id :  " + courseDto.getProfessorId() );
+            throw new ConflictException("there is no professor with this id :  " + courseDto.getProfessorId());
         } else {
             Course course = new Course();
             CourseMapper.saveEntityFromDto(courseDto, course);
@@ -95,6 +96,24 @@ public class CourseServiceImpl implements CourseService {
         } else {
 
             throw new NotFoundException("course with " + courseDto.getId() + "not found");
+        }
+    }
+
+    @Override
+    public ShowCourseDto showCourseByCode(long code) {
+        Optional<Course> foundedCourse = courseRepository.findByCode(code);
+        if (foundedCourse.isPresent()) {
+            ShowCourseDto showCourseDto = new ShowCourseDto();
+            Course course = foundedCourse.get();
+
+
+            showCourseDto.setProfessorName(course.getProfessor().getName());
+
+            showCourseDto.setUnit(course.getTitle());
+            showCourseDto.setTitle(String.valueOf(course.getUnits()));
+            return showCourseDto;
+        } else {
+            throw new NotFoundException("course with code " + code + "not found");
         }
     }
 
