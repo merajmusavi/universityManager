@@ -1,12 +1,23 @@
 package com.example.universityManager.service;
 
+import com.example.universityManager.dto.course.ShowCourseDto;
+import com.example.universityManager.dto.course.UpdateCourseDto;
+import com.example.universityManager.dto.student.AddStudentDto;
 import com.example.universityManager.entity.Course;
-import com.example.universityManager.repository.CourseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.example.universityManager.entity.Student;
 
-@Service
-public class StudentService {
+public interface StudentService {
+    public boolean deleteById(Long id);
 
+    public void save(AddStudentDto studentDto);
+
+    public Student findById(Long id);
+
+    public Boolean isStdWithThisCodeExists(Long code);
+
+    public Boolean isStdWithThisIdExists(Long id);
+
+
+    public Student update();
 
 }
