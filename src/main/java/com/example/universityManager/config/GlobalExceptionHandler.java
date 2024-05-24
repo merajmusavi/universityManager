@@ -1,6 +1,7 @@
 package com.example.universityManager.config;
 
 import com.example.universityManager.dto.ErrorEntity;
+import com.example.universityManager.exception.AlreadyExistsException;
 import com.example.universityManager.exception.ConflictException;
 import com.example.universityManager.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
@@ -22,5 +23,11 @@ public class GlobalExceptionHandler {
         ErrorEntity errorEntity = new ErrorEntity();
         errorEntity.setStatus(notFoundException.getMessage());
         return new ResponseEntity<>(errorEntity,HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(AlreadyExistsException.class)
+    public ResponseEntity<ErrorEntity> handleAlreadyExistsException(AlreadyExistsException alreadyExistsException){
+        ErrorEntity errorEntity = new ErrorEntity();
+        errorEntity.setStatus(alreadyExistsException.getMessage());
+        return new ResponseEntity<>(errorEntity,HttpStatus.ALREADY_REPORTED);
     }
 }

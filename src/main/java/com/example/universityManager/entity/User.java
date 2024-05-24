@@ -20,7 +20,7 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String family;
     @Column(nullable = false, updatable = false)
-    private long nationalCode;
+    private String nationalCode;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -53,11 +53,11 @@ public class User extends BaseEntity {
         this.family = family;
     }
 
-    public long getNationalCode() {
+    public String getNationalCode() {
         return nationalCode;
     }
 
-    public void setNationalCode(long nationalCode) {
+    public void setNationalCode(String nationalCode) {
         this.nationalCode = nationalCode;
     }
 

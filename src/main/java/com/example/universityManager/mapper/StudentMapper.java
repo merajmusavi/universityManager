@@ -20,5 +20,6 @@ public class StudentMapper {
         student.setGender(Gender.valueOf(dto.getGender()));
         student.setUsername(dto.getUserName());
         student.setPassword(dto.getPassword());
+        student.setNationalCode(dto.getNationalCode());
     }
 }
