@@ -35,18 +35,20 @@ public class StudentController {
         return ResponseEntity.ok(updateStudentDto);
 
 
-
     }
+
+    @GetMapping("/show/{id}")
+    public ResponseEntity<?> showStudent(@PathVariable Long id) {
+        return ResponseEntity.ok(studentService.showStudentDto(id));
+    }
+
     @GetMapping("/delete/{id}")
-    public ResponseEntity<?> deleteStudent(@PathVariable Long id){
-        logger.info("start the method for deleting user : " + id);
+    public ResponseEntity<?> deleteStudent(@PathVariable Long id) {
         boolean isDeletedStudent = studentService.deleteById(id);
 
-        if (isDeletedStudent){
-            logger.warn("student with " + id + " deleted");
+        if (isDeletedStudent) {
             return ResponseEntity.ok().build();
-        }else {
-            logger.warn("student with " + id + " don`t deleted");
+        } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }

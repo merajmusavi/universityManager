@@ -1,6 +1,7 @@
 package com.example.universityManager.service;
 
 import com.example.universityManager.dto.student.AddStudentDto;
+import com.example.universityManager.dto.student.ShowStudentDto;
 import com.example.universityManager.dto.student.UpdateStudentDto;
 import com.example.universityManager.entity.Student;
 import com.example.universityManager.exception.AlreadyExistsException;
@@ -28,9 +29,9 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public boolean deleteById(Long id) {
         Optional<Student> findStudentById = studentRepository.findById(id);
-        if (findStudentById.isEmpty()){
+        if (findStudentById.isEmpty()) {
             return false;
-        }else{
+        } else {
             studentRepository.deleteById(id);
             return true;
         }
@@ -63,7 +64,12 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student findById(Long id) {
-        return null;
+        Optional<Student> foundedStudent = studentRepository.findById(id);
+        if (foundedStudent.isPresent()) {
+            return foundedStudent.get();
+        } else {
+            throw new NotFoundException("there is no student with " + id + " this id");
+        }
     }
 
     @Override
@@ -78,14 +84,21 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Boolean update(UpdateStudentDto dto) {
-        Optional<Student> foundedStudentById = studentRepository.findById(dto.getId());
-        if (!foundedStudentById.isPresent()) {
-            throw new NotFoundException("student with id :" + dto.getId() + " not found!");
-        }
-        Student student = foundedStudentById.get();
-        StudentMapper.updateEntityFromDto(dto, student);
-        studentRepository.save(student);
+        Student foundedStudentById = findById(dto.getId());
+
+        StudentMapper.updateEntityFromDto(dto, foundedStudentById);
+        studentRepository.save(foundedStudentById);
         return true;
 
+    }
+
+    @Override
+    public ShowStudentDto showStudentDto(Long id) {
+        Student foundedStudent = findById(id);
+        ShowStudentDto showStudentDto = new ShowStudentDto();
+
+        StudentMapper.showDtoFromEntity(showStudentDto, foundedStudent);
+
+        return showStudentDto;
     }
 }

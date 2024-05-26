@@ -1,6 +1,7 @@
 package com.example.universityManager.mapper;
 
 import com.example.universityManager.dto.student.AddStudentDto;
+import com.example.universityManager.dto.student.ShowStudentDto;
 import com.example.universityManager.dto.student.UpdateStudentDto;
 import com.example.universityManager.entity.Student;
 import com.example.universityManager.enums.AcademicLevel;
@@ -22,6 +23,21 @@ public class StudentMapper {
         student.setUsername(dto.getUserName());
         student.setPassword(dto.getPassword());
         student.setNationalCode(dto.getNationalCode());
+    }
+
+    public static void showDtoFromEntity(ShowStudentDto dto, Student student) {
+        if (dto == null || student == null) {
+            return;
+        }
+        dto.setAcademic_rank(student.getAcademicRank());
+        dto.setBirthDay(student.getBirthday());
+
+        dto.setFamily(student.getFamily());
+        dto.setName(student.getName());
+        dto.setGender(student.getGender());
+        dto.setNationalCode(student.getNationalCode());
+        dto.setStd_number(String.valueOf(student.getStdNumber()));
+        dto.setUsername(student.getUsername());
     }
 
     public static void updateEntityFromDto(UpdateStudentDto dto, Student student) {
