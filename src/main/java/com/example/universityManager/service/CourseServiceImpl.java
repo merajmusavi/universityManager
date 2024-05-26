@@ -5,6 +5,7 @@ import com.example.universityManager.dto.course.ShowCourseDto;
 import com.example.universityManager.dto.course.UpdateCourseDto;
 import com.example.universityManager.entity.Course;
 import com.example.universityManager.entity.Professor;
+import com.example.universityManager.entity.Student;
 import com.example.universityManager.exception.ConflictException;
 import com.example.universityManager.exception.NotFoundException;
 import com.example.universityManager.mapper.CourseMapper;
@@ -12,7 +13,9 @@ import com.example.universityManager.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -111,6 +114,10 @@ public class CourseServiceImpl implements CourseService {
 
             showCourseDto.setUnit(course.getTitle());
             showCourseDto.setTitle(String.valueOf(course.getUnits()));
+            List<Long> listOfStudents = course.getStudents().stream().map(Student::getStdNumber)
+                    .collect(Collectors.toList());
+
+            showCourseDto.setStudents(listOfStudents);
             return showCourseDto;
         } else {
             throw new NotFoundException("course with code " + code + "not found");

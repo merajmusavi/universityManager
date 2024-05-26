@@ -1,9 +1,20 @@
 package com.example.universityManager.dto.course;
 
+import java.util.List;
+
 public class ShowCourseDto {
     private String title;
     private String ProfessorName;
     private String unit;
+    private List<Long> students;
+
+    public List<Long> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Long> students) {
+        this.students = students;
+    }
 
     public String getTitle() {
         return title;
