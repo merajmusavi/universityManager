@@ -1,8 +1,10 @@
 package com.example.universityManager.service;
 
 import com.example.universityManager.dto.student.AddStudentDto;
+import com.example.universityManager.dto.student.UpdateStudentDto;
 import com.example.universityManager.entity.Student;
 import com.example.universityManager.exception.AlreadyExistsException;
+import com.example.universityManager.exception.NotFoundException;
 import com.example.universityManager.mapper.StudentMapper;
 import com.example.universityManager.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,14 +41,13 @@ public class StudentServiceImpl implements StudentService {
         if (foundedStudentByUserName.isPresent()) {
             throw new AlreadyExistsException("student with username : " + studentDto.getUserName() + " already exists");
         }
-        if (foundedStudentByNationalCode.isPresent()){
-            throw new AlreadyExistsException("student with nationalCode : "+ studentDto.getNationalCode() + " already exists");
+        if (foundedStudentByNationalCode.isPresent()) {
+            throw new AlreadyExistsException("student with nationalCode : " + studentDto.getNationalCode() + " already exists");
         }
 
-        if (foundedStudentByStdNumber.isPresent()){
+        if (foundedStudentByStdNumber.isPresent()) {
             throw new AlreadyExistsException("student with student number : " + studentDto.getStd_number() + " already exists");
         }
-
 
 
         Student student = new Student();
@@ -70,7 +71,15 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student update() {
-        return null;
+    public Boolean update(UpdateStudentDto dto) {
+        Optional<Student> foundedStudentById = studentRepository.findById(dto.getId());
+        if (!foundedStudentById.isPresent()) {
+            throw new NotFoundException("student with id :" + dto.getId() + " not found!");
+        }
+        Student student = foundedStudentById.get();
+        StudentMapper.updateEntityFromDto(dto, student);
+        studentRepository.save(student);
+        return true;
+
     }
 }
