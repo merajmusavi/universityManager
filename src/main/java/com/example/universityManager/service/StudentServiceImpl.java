@@ -27,7 +27,13 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public boolean deleteById(Long id) {
-        return false;
+        Optional<Student> findStudentById = studentRepository.findById(id);
+        if (findStudentById.isEmpty()){
+            return false;
+        }else{
+            studentRepository.deleteById(id);
+            return true;
+        }
     }
 
     @Override
