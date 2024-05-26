@@ -1,11 +1,11 @@
-package com.example.universityManager.dto;
+package com.example.universityManager.dto.professor;
 
 import com.example.universityManager.enums.AcademicRank;
 import com.example.universityManager.enums.Gender;
 
 import java.util.Date;
 
-public class ProfessorDto {
+public class AddProfessorDto {
     private Date birthday;
     private String family;
     private Gender gender;

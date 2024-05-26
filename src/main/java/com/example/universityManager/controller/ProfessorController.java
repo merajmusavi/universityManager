@@ -1,6 +1,6 @@
 package com.example.universityManager.controller;
 
-import com.example.universityManager.dto.ProfessorDto;
+import com.example.universityManager.dto.professor.AddProfessorDto;
 import com.example.universityManager.entity.Professor;
 import com.example.universityManager.service.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,18 +20,8 @@ public class ProfessorController {
 
     @GetMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
-    public void save(@RequestBody ProfessorDto dto) {
-        Professor professor = new Professor();
-
-        professor.setCode(dto.getCode());
-        professor.setAcademicRank(dto.getAcademicRank());
-        professor.setFamily(dto.getFamily());
-        professor.setName(dto.getName());
-        professor.setUsername(dto.getUsername());
-        professor.setPassword(dto.getPassword());
-        professor.setBirthday(dto.getBirthday());
-        professor.setGender(dto.getGender());
-        professor.setNationalCode(String.valueOf(dto.getNationalCode()));
+    public void save(@RequestBody AddProfessorDto dto) {
+        professorService.save(dto);
 
     }
 

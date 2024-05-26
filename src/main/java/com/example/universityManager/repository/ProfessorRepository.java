@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface ProfessorRepository extends UserRepository<Professor> {
-    Optional<Course> findByCode(Long code);
+    Optional<Professor> findByCode(Long code);
 
 }

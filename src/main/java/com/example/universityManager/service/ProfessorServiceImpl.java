@@ -1,9 +1,12 @@
 package com.example.universityManager.service;
 
+import com.example.universityManager.dto.professor.AddProfessorDto;
 import com.example.universityManager.entity.Course;
 import com.example.universityManager.entity.Professor;
+import com.example.universityManager.exception.AlreadyExistsException;
 import com.example.universityManager.exception.ConflictException;
 import com.example.universityManager.exception.NotFoundException;
+import com.example.universityManager.mapper.ProfessorMapper;
 import com.example.universityManager.repository.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,14 +35,14 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
 
     @Override
-    public void save(Professor professor) {
-        Optional<Course> foundedProfessor = professorRepository.findByCode(Long.valueOf(professor.getCode()));
+    public void save(AddProfessorDto professorDto) {
+        Optional<Professor> foundedProfessor = professorRepository.findByCode(Long.valueOf(professorDto.getCode()));
         if (foundedProfessor.isPresent()) {
-            throw new ConflictException("already there is a professor with this code ");
-
-        } else {
-            professorRepository.save(professor);
+            throw new AlreadyExistsException("professor with this code :" + professorDto.getCode() + " already exists");
         }
+        Professor professor = new Professor();
+        ProfessorMapper.saveEntityFromDto(professorDto, professor);
+        professorRepository.save(professor);
     }
 
     @Override
