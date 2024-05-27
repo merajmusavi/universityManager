@@ -12,7 +12,9 @@ import com.example.universityManager.exception.NotFoundException;
 import com.example.universityManager.mapper.CourseMapper;
 import com.example.universityManager.mapper.StudentMapper;
 import com.example.universityManager.repository.CourseRepository;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -150,6 +152,10 @@ public class CourseServiceImpl implements CourseService {
         update(foundedCourse);
     }
 
+    @Cacheable("allCourse")
+    public List<Course> findAll(){
+        return courseRepository.findAll();
+    }
 
     @Override
     public Course findByCode(String codeCourse) {
