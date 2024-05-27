@@ -141,6 +141,17 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public void removeCourse(String codeCourse, String stdNumber) {
+        Student foundedStudent = studentService.findByStdNumber(stdNumber);
+        Course foundedCourse = findByCode(codeCourse);
+        foundedCourse.getStudents().remove(foundedStudent);
+        foundedStudent.getCourses().remove(foundedCourse);
+        studentService.update(foundedStudent);
+        update(foundedCourse);
+    }
+
+
+    @Override
     public Course findByCode(String codeCourse) {
         Optional<Course> foundedCourseByCode = courseRepository.findByCode(Long.valueOf(codeCourse));
         if (foundedCourseByCode.isPresent()) {

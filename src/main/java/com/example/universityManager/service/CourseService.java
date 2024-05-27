@@ -30,4 +30,5 @@ public interface CourseService {
 
     void update(Course course);
     public List<ShowStudentDto> listStudents(String codeCourse);
+    void removeCourse(String codeCourse, String stdNumber);
 }
