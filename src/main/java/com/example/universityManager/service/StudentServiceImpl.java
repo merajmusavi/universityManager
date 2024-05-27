@@ -101,4 +101,19 @@ public class StudentServiceImpl implements StudentService {
 
         return showStudentDto;
     }
+
+    @Override
+    public Student findByStdNumber(String stdNumber) {
+        Optional<Student> foundedStudentByStdNumber = studentRepository.findByStdNumber(Long.valueOf(stdNumber));
+        if (foundedStudentByStdNumber.isPresent()){
+            return foundedStudentByStdNumber.get();
+        }else {
+            throw new NotFoundException("student with student number: : "+ stdNumber + " not found") ;
+        }
+    }
+
+    @Override
+    public void update(Student student) {
+        studentRepository.save(student);
+    }
 }

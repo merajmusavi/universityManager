@@ -9,6 +9,7 @@ import com.example.universityManager.entity.Student;
 import com.example.universityManager.exception.ConflictException;
 import com.example.universityManager.exception.NotFoundException;
 import com.example.universityManager.mapper.CourseMapper;
+import com.example.universityManager.mapper.StudentMapper;
 import com.example.universityManager.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,11 +22,13 @@ import java.util.stream.Collectors;
 public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
     private final ProfessorService professorService;
+    private final StudentService studentService;
 
     @Autowired
-    public CourseServiceImpl(CourseRepository courseRepository, ProfessorService professorService) {
+    public CourseServiceImpl(CourseRepository courseRepository, ProfessorService professorService, StudentService studentService) {
         this.courseRepository = courseRepository;
         this.professorService = professorService;
+        this.studentService = studentService;
     }
 
     @Override
@@ -122,6 +125,32 @@ public class CourseServiceImpl implements CourseService {
         } else {
             throw new NotFoundException("course with code " + code + "not found");
         }
+    }
+
+
+    @Override
+    public void addStudent(String codeCourse, String stdNumber) {
+        Student foundedStudent = studentService.findByStdNumber(stdNumber);
+        Course foundedCourse = findByCode(codeCourse);
+        foundedCourse.getStudents().add(foundedStudent);
+        foundedStudent.getCourses().add(foundedCourse);
+        studentService.update(foundedStudent);
+        update(foundedCourse);
+    }
+
+    @Override
+    public Course findByCode(String codeCourse) {
+        Optional<Course> foundedCourseByCode = courseRepository.findByCode(Long.valueOf(codeCourse));
+        if (foundedCourseByCode.isPresent()) {
+            return foundedCourseByCode.get();
+        } else {
+            throw new NotFoundException("course with code : " + codeCourse + " not found");
+        }
+    }
+
+    @Override
+    public void update(Course course) {
+        courseRepository.save(course);
     }
 
 

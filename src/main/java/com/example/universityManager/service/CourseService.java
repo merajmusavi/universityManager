@@ -6,17 +6,23 @@ import com.example.universityManager.dto.course.UpdateCourseDto;
 import com.example.universityManager.entity.Course;
 
 public interface CourseService {
-    public boolean deleteById(Long id);
+    boolean deleteById(Long id);
 
-    public void save(AddCourseDto course);
+    void save(AddCourseDto course);
 
-    public Course findById(Long id);
+    Course findById(Long id);
 
-    public Boolean isCourseWithThisCodeExists(Long code);
+    Boolean isCourseWithThisCodeExists(Long code);
 
-    public Boolean isCourseWithThisIdExists(Long id);
+    Boolean isCourseWithThisIdExists(Long id);
 
-    public Course update(UpdateCourseDto course);
+    Course update(UpdateCourseDto course);
 
-    public ShowCourseDto showCourseByCode(long code);
+    ShowCourseDto showCourseByCode(long code);
+
+    void addStudent(String codeCourse, String stdNumber);
+
+    Course findByCode(String codeCourse);
+
+    void update(Course course);
 }

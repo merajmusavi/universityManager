@@ -23,4 +23,6 @@ public interface StudentService {
      Boolean update(UpdateStudentDto updateStudentDto);
 
      ShowStudentDto showStudentDto(Long id);
+     Student findByStdNumber(String stdNumber);
+     void update(Student student);
 }
