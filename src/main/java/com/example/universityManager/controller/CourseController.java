@@ -1,6 +1,7 @@
 package com.example.universityManager.controller;
 
 import com.example.universityManager.dto.course.AddCourseDto;
+import com.example.universityManager.dto.course.AssignStudentToCourseDto;
 import com.example.universityManager.dto.course.ShowCourseDto;
 import com.example.universityManager.dto.course.UpdateCourseDto;
 import com.example.universityManager.entity.Course;
@@ -52,7 +53,12 @@ public class CourseController {
 
     @GetMapping("/getCourseByCode/{code}")
     @ResponseStatus(HttpStatus.OK)
-    public ShowCourseDto showCourse(@PathVariable Long code){
+    public ShowCourseDto showCourse(@PathVariable Long code) {
         return courseService.showCourseByCode(code);
+    }
+
+    @PostMapping
+    public void AddCourse(@RequestBody AssignStudentToCourseDto addDto) {
+        courseService.addStudent(addDto.getCourseCode(), addDto.getStudentCode());
     }
 }

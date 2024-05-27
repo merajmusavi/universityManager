@@ -3,6 +3,7 @@ package com.example.universityManager.service;
 import com.example.universityManager.dto.course.AddCourseDto;
 import com.example.universityManager.dto.course.ShowCourseDto;
 import com.example.universityManager.dto.course.UpdateCourseDto;
+import com.example.universityManager.dto.student.ShowStudentDto;
 import com.example.universityManager.entity.Course;
 import com.example.universityManager.entity.Professor;
 import com.example.universityManager.entity.Student;
@@ -14,6 +15,7 @@ import com.example.universityManager.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -151,6 +153,19 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public void update(Course course) {
         courseRepository.save(course);
+    }
+
+    @Override
+    public List<ShowStudentDto> listStudents(String codeCourse) {
+        Course course = findByCode(codeCourse);
+        List<Student> students = course.getStudents().stream().toList();
+        List<ShowStudentDto> showStudentDto = new ArrayList<>();
+        for (Student student : students) {
+            ShowStudentDto studentDto = new ShowStudentDto();
+            StudentMapper.showDtoFromEntity(studentDto, student);
+            showStudentDto.add(studentDto);
+        }
+        return showStudentDto;
     }
 
 
