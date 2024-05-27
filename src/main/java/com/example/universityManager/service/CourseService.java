@@ -3,7 +3,11 @@ package com.example.universityManager.service;
 import com.example.universityManager.dto.course.AddCourseDto;
 import com.example.universityManager.dto.course.ShowCourseDto;
 import com.example.universityManager.dto.course.UpdateCourseDto;
+import com.example.universityManager.dto.student.ShowStudentDto;
 import com.example.universityManager.entity.Course;
+import com.example.universityManager.entity.Student;
+
+import java.util.List;
 
 public interface CourseService {
     boolean deleteById(Long id);
@@ -25,4 +29,5 @@ public interface CourseService {
     Course findByCode(String codeCourse);
 
     void update(Course course);
+    public List<ShowStudentDto> listStudents(String codeCourse);
 }
