@@ -2,10 +2,8 @@ package com.example.universityManager.service;
 
 import com.example.universityManager.dto.professor.AddProfessorDto;
 import com.example.universityManager.dto.professor.ShowProfessorDto;
-import com.example.universityManager.entity.Course;
 import com.example.universityManager.entity.Professor;
 import com.example.universityManager.exception.AlreadyExistsException;
-import com.example.universityManager.exception.ConflictException;
 import com.example.universityManager.exception.NotFoundException;
 import com.example.universityManager.mapper.ProfessorMapper;
 import com.example.universityManager.repository.ProfessorRepository;
