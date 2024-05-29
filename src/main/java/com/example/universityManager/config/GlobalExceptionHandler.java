@@ -19,15 +19,16 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ErrorEntity> handleNotFoundException(NotFoundException notFoundException){
+    public ResponseEntity<ErrorEntity> handleNotFoundException(NotFoundException notFoundException) {
         ErrorEntity errorEntity = new ErrorEntity();
         errorEntity.setStatus(notFoundException.getMessage());
-        return new ResponseEntity<>(errorEntity,HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorEntity, HttpStatus.NOT_FOUND);
     }
+
     @ExceptionHandler(AlreadyExistsException.class)
-    public ResponseEntity<ErrorEntity> handleAlreadyExistsException(AlreadyExistsException alreadyExistsException){
+    public ResponseEntity<ErrorEntity> handleAlreadyExistsException(AlreadyExistsException alreadyExistsException) {
         ErrorEntity errorEntity = new ErrorEntity();
         errorEntity.setStatus(alreadyExistsException.getMessage());
-        return new ResponseEntity<>(errorEntity,HttpStatus.ALREADY_REPORTED);
+        return new ResponseEntity<>(errorEntity, HttpStatus.BAD_REQUEST);
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.Date;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -42,6 +43,25 @@ public class ProfessorControllerIntegrationTest {
                 .content(objectMapper.writeValueAsString(professorDto));
         mockMvc.perform(request)
                 .andExpect(status().isCreated());
+
+    }
+    @Test
+    void whenDuplicateCode_thenReturn404() throws Exception{
+        AddProfessorDto professorDto = new AddProfessorDto();
+        professorDto.setBirthday(new Date());
+        professorDto.setFamily("Doe");
+        professorDto.setGender(Gender.MALE);
+        professorDto.setName("John");
+        professorDto.setNationalCode(123456789L);
+        professorDto.setPassword("password");
+        professorDto.setUsername("dsfsdcsf");
+        professorDto.setAcademicRank(AcademicRank.PROFESSOR);
+        professorDto.setCode(1001);
+        String professorJson = objectMapper.writeValueAsString(professorDto);
+        MockHttpServletRequestBuilder request = post("/professor/v1/save")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(professorJson);
+        mockMvc.perform(request).andExpect(status().isBadRequest());
 
     }
 }
