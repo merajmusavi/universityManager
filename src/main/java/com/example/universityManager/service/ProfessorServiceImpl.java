@@ -1,6 +1,7 @@
 package com.example.universityManager.service;
 
 import com.example.universityManager.dto.professor.AddProfessorDto;
+import com.example.universityManager.dto.professor.ShowProfessorDto;
 import com.example.universityManager.entity.Course;
 import com.example.universityManager.entity.Professor;
 import com.example.universityManager.exception.AlreadyExistsException;
@@ -75,8 +76,20 @@ public class ProfessorServiceImpl implements ProfessorService {
         if (professorWithThisIdExists) {
             professorRepository.save(professor);
             return professor;
-        } else {
+        } else   {
             throw new NotFoundException("professor with " + professor.getId() + "not found");
+        }
+    }
+
+    @Override
+    public ShowProfessorDto findProfessorByCode(String code) {
+        Optional<Professor> foundedProfessorByCode = professorRepository.findByCode(Long.valueOf(code));
+        if (foundedProfessorByCode.isPresent()){
+            ShowProfessorDto showProfessorDto = new ShowProfessorDto();
+             ProfessorMapper.showDtoFromEntity(showProfessorDto,foundedProfessorByCode.get());
+             return showProfessorDto;
+        }else {
+            throw new NotFoundException("professor with code : " + code + " not found");
         }
     }
 }

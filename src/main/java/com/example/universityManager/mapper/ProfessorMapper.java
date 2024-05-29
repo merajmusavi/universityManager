@@ -1,10 +1,21 @@
 package com.example.universityManager.mapper;
 
 import com.example.universityManager.dto.professor.AddProfessorDto;
+import com.example.universityManager.dto.professor.ShowProfessorDto;
 import com.example.universityManager.dto.professor.UpdateProfessorDto;
 import com.example.universityManager.entity.Professor;
 
 public class ProfessorMapper {
+
+    public static void showDtoFromEntity(ShowProfessorDto dto, Professor professor) {
+        if (dto == null || professor == null) {
+            return;
+        }
+        dto.setAcademicRank(professor.getAcademicRank());
+        dto.setBirthDay(String.valueOf(professor.getBirthday()));
+        dto.setGender(professor.getGender());
+        dto.setName(professor.getName());
+    }
 
     public static void saveEntityFromDto(AddProfessorDto dto, Professor professor) {
         if (dto == null || professor == null) {
