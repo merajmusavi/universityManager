@@ -12,6 +12,9 @@ import com.example.universityManager.exception.NotFoundException;
 import com.example.universityManager.mapper.CourseMapper;
 import com.example.universityManager.mapper.StudentMapper;
 import com.example.universityManager.repository.CourseRepository;
+import com.universitymanager.aggregate.common.Result;
+import com.universitymanager.aggregate.course.usecase.SaveCourseUc;
+import com.universitymanager.aggregate.model.cmd.CourseCmd;
 import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -27,12 +30,14 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
     private final ProfessorService professorService;
     private final StudentService studentService;
+    private final SaveCourseUc saveCourseUc;
 
     @Autowired
-    public CourseServiceImpl(CourseRepository courseRepository, ProfessorService professorService, StudentService studentService) {
+    public CourseServiceImpl(CourseRepository courseRepository, ProfessorService professorService, StudentService studentService, SaveCourseUc saveCourseUc) {
         this.courseRepository = courseRepository;
         this.professorService = professorService;
         this.studentService = studentService;
+        this.saveCourseUc = saveCourseUc;
     }
 
     @Override
@@ -153,7 +158,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Cacheable("allCourse")
-    public List<Course> findAll(){
+    public List<Course> findAll() {
         return courseRepository.findAll();
     }
 
@@ -184,6 +189,7 @@ public class CourseServiceImpl implements CourseService {
         }
         return showStudentDto;
     }
+
 
 
 }

@@ -8,15 +8,15 @@ import com.universitymanager.aggregate.course.valueobject.Code;
 import com.universitymanager.aggregate.course.valueobject.Title;
 import com.universitymanager.aggregate.course.valueobject.Units;
 import com.universitymanager.aggregate.model.cmd.CourseCmd;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SaveCourseUc implements CommandUseCase<CourseCmd, Course> {
+
+    @Autowired
     private CourseRepository courseRepository;
 
-    public SaveCourseUc(CourseRepository courseRepository) {
-        this.courseRepository = courseRepository;
-    }
 
     @Override
     public Result<Course> execute(CourseCmd courseCmd) {
@@ -40,7 +40,7 @@ public class SaveCourseUc implements CommandUseCase<CourseCmd, Course> {
                 courseCmd.getProfessorId()
         );
         if (courseResult.isSuccess()) {
-            courseRepository.save(courseResult.getValue());
+            courseRepository.save(courseCmd);
             return Result.success(courseResult.getValue());
         } else {
             return Result.failure(new IllegalArgumentException("invalid course type"));
