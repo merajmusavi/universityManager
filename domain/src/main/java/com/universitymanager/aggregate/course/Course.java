@@ -9,6 +9,15 @@ public class Course {
     Code code;
     Title title;
     Units units;
+    Long professorId;
+
+    public Long getProfessorId() {
+        return professorId;
+    }
+
+    public void setProfessorId(Long professorId) {
+        this.professorId = professorId;
+    }
 
     public Code getCode() {
         return code;
@@ -34,25 +43,26 @@ public class Course {
         this.units = units;
     }
 
-    private Course(Code code, Title title, Units units) {
+    private Course(Code code, Title title, Units units, Long professorId) {
         this.code = code;
         this.title = title;
         this.units = units;
+        this.professorId = professorId;
     }
 
     public static Result<Course> makeNew(
-            String code,
-            String title,
-            String units
+            Code code,
+            Title title,
+            Units units,
+            Long professorId
     ) {
-        Result<Code> codeResult = code != null ? Code.makeNew(code) : Result.success(null);
-        Result<Title> titleResult = title != null ? Title.makeNew(title) : Result.success(null);
-        Result<Units> unitsResult = units != null ? Units.makeNew(units) : Result.success(null);
+
         return Result.success(
                 new Course(
-                        codeResult.getValue(),
-                        titleResult.getValue(),
-                        unitsResult.getValue()
+                        code,
+                        title,
+                        units,
+                        professorId
                 )
         );
     }
