@@ -7,7 +7,10 @@ import com.universitymanager.aggregate.course.CourseRepository;
 import com.universitymanager.aggregate.course.valueobject.Code;
 import com.universitymanager.aggregate.course.valueobject.Title;
 import com.universitymanager.aggregate.course.valueobject.Units;
+import com.universitymanager.aggregate.exception.NotFoundException;
 import com.universitymanager.aggregate.model.cmd.CourseCmd;
+import com.universitymanager.aggregate.professor.Professor;
+import com.universitymanager.aggregate.professor.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +19,8 @@ public class SaveCourseUc implements CommandUseCase<CourseCmd, Course> {
 
     @Autowired
     private CourseRepository courseRepository;
-
+    @Autowired
+    private ProfessorRepository professorRepository;
 
     @Override
     public Result<Course> execute(CourseCmd courseCmd) {
@@ -33,6 +37,12 @@ public class SaveCourseUc implements CommandUseCase<CourseCmd, Course> {
 
             return Result.failure(new IllegalArgumentException("invalid units"));
         }
+        Professor foundedProfessor = professorRepository.findById(courseCmd.getProfessorId());
+
+        if (foundedProfessor==null){
+            throw new NotFoundException("professor with " + courseCmd.getProfessorId() + " id not found");
+        }
+
         Result<Course> courseResult = Course.makeNew(
                 codeResult.getValue(),
                 titleResult.getValue(),
